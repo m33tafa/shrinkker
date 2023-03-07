@@ -67,13 +67,18 @@ If the long URL was successfully shortened, the following message appears with t
 {
   "status": true,
   "message": "Given Url shrinkked successfully",
-  "given_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4",
-  "shrinkked_url": "https://your-host/WjSMfL77"
+  "data": {
+    "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4",
+    "code": "2qp1ZtYb",
+    "shrinkked_url": "https://your-host/2qp1ZtYb",
+    "creation_time": "2023-03-04T12:12:57.000000Z",
+    "hits": null
+  }
 }
 ```
 Now, with the help of the new, shrinkked URL, the desired destination address can be accessed with any web browser:
 ```
-https://your-host/WjSMfL77
+https://your-host/2qp1ZtYb
 ```
 ## List all my shrinkked URL's
 With the following call all already created shrinkked URL's can be displayed for the logged in user:
@@ -87,15 +92,32 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 #Response
 {
   "status": true,
-  "message": "My Shrinkked URLs",
-  "urls": [
-    {
-      "code": "WjSMfL77",
-      "url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4",
-      "hits": 7,
-      "created_at": "2023-02-05T18:13:54.000000Z"
+  "message": "Shrinkked URLs List",
+  "data": {
+    "url-list": {
+      "2qp1ZtYb": {
+        "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4",
+        "code": "2qp1ZtYb",
+        "shrinkked_url": "https://your-host/2qp1ZtYb",
+        "creation_time": "2023-03-01T09:12:57.000000Z",
+        "hits": 75
+      },
+      "orAYZ3or": {
+        "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=5",
+        "code": "orAYZ3or",
+        "shrinkked_url": "https://your-host/orAYZ3or",
+        "creation_time": "2023-03-04T00:14:47.000000Z",
+        "hits": 7
+      },
+      "a9cy0QUd": {
+        "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=6",
+        "code": "a9cy0QUd",
+        "shrinkked_url": "https://your-host/a9cy0QUd",
+        "creation_time": "2023-03-05T23:14:52.000000Z",
+        "hits": 0
+      }
     }
-  ]
+  }
 }
 
 

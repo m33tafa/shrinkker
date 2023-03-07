@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Url;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UrlCollection;
+use App\Http\Resources\UrlResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL as FacadesURL;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class UrlController extends Controller
@@ -21,19 +23,19 @@ class UrlController extends Controller
     {
         try
         {
-            $urls = Url::select('code','url','hits','created_at')->where('user_id', Auth::user()->id)->get();
+            $urls = new UrlCollection(UrlResource::collection(Url::all()->where('user_id', Auth::user()->id))->keyBy->code);
             if($urls->count() > 0)
             {
                 return response()->json([
                     'status' => true,
-                    'message' => 'My Shrinkked URLs',
-                    'urls' => $urls
+                    'message' => 'Shrinkked URLs List',
+                    'data' => $urls,
                 ], 200);
             }else
             {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Shrinkked URLs not found!'
+                    'message' => 'Shrinkked URLs not found!',
                 ], 200);
             }
         }catch (\Throwable $th)
@@ -53,6 +55,21 @@ class UrlController extends Controller
     {
         try
         {
+
+            //Validated
+            $validateUrl = Validator::make($request->all(),
+            [
+                'url' => 'required'
+            ]);
+
+            if($validateUrl->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUrl->errors()
+                ], 401);
+            }
+
             $url = Url::where('url', $request->url)->first();
 
             if(!$url)
@@ -66,17 +83,14 @@ class UrlController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Given Url shrinkked successfully',
-                    'given_url' => $request->url,
-                    'shrinkked_url' => FacadesURL::to('/'. $newUrl->code)
+                    'data' => new UrlResource($newUrl)
                 ], 200);
             }else
             {
                 return response()->json([
                     'status' => true,
                     'message' => 'Shrinkked URL already exists for given URL!',
-                    'given_url' => $request->url,
-                    'shrinkked_url' => FacadesURL::to('/'. $url->code),
-                    'creation_time' => $url->created_at
+                    'data' => new UrlResource($url)
                 ], 200);
             }
 
