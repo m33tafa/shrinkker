@@ -1,14 +1,16 @@
 
 # Shrinkker
 
-Shrinkker is a simple URL shortener which is completely available to you as a RESTful API.
+Shrinkker is a simple URL shortener made with Laravel PHP.
+
+The Shrinkker app provides a full Restful API for managing shortening URL's and users.
 
 To use Shrinkker, a user management with a token-based authentication is available.
 
 
 
 ## Register Shrinkker Users
-To register users, you can proceed as follows:
+To register users, you can proceed as follows in the Restful API of the app:
 ```
 POST https://your-host/api/auth/register HTTP/1.1
 content-type: application/json
@@ -29,7 +31,7 @@ When the new user is successfully registered, the following response appears wit
 }
 ```
 ## Login Shrinkker Users (Get Token for existing User)
-To get a token for an already registered user the following call can be used:
+To get a token for an already registered user the following API request can be used:
 ```
 POST https://your-host/api/auth/login HTTP/1.1
 content-type: application/json
@@ -50,7 +52,7 @@ When the existing user is successfully logged in, the following response appears
 
 ```
 ## Shrinkk URL's
-To shorten or shrinkk an existing long URL you need a shrinkker user with an authentication token. If you have that you can shorten a URL with the following call:
+To shorten/shrinkk an existing long URL you need a shrinkker user with an authentication token. If you have that you can shorten a URL with the following API request:
 ```
 POST https://your-host/api/url/shrinkk/create HTTP/1.1
 Content-Type: application/json
@@ -60,7 +62,7 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
     "url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4"
 }
 ```
-If the long URL was successfully shortened, the following message appears with the new, shortened (shrinkked) URL:
+If the long URL was successfully shortened, the following response appears with the new, shortened (shrinkked) URL:
 
 
 ```
@@ -124,7 +126,7 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
 ```
 ## Delete my shrinkked URL
-To delete a shrinkked URL the following call can be used:
+To delete a shrinkked URL the following API request can be used:
 ```
 #Request
 POST http://localhost/api/url/shrinkk/delete/WjSMfL77 HTTP/1.1
