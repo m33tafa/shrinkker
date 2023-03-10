@@ -1,3 +1,4 @@
+[![Shrinkker Tests](https://github.com/m33tafa/shrinkker/actions/workflows/laravel.yml/badge.svg)](https://github.com/m33tafa/shrinkker/actions/workflows/laravel.yml)
 
 # Shrinkker
 
