@@ -44,5 +44,4 @@ jobs:
     - name: Run Migration
       run: php artisan migrate --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
       run: vendor/bin/phpunit
