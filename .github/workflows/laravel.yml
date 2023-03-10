@@ -38,6 +38,11 @@ jobs:
         mysql database: shrinkker-test-db 
         mysql user: developer
         mysql password: developer-passwd
+    - name: Wait for MariaDB
+      run: |
+        while ! mysqladmin ping --host=127.0.0.1 --password=shrinkker-test-root-db --silent; do
+          sleep 1
+        done
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
