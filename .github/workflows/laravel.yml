@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '8.0'
+        php-version: '8.2'
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -24,12 +24,25 @@ jobs:
       run: php artisan key:generate
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
+    - name: Create & Start MariaDB instance
+      uses: getong/mariadb-action@v1.1
+      with:
+        # The port of host
+        host port: 3306
+        # The port of container
+        container port: 3306
+        character set server: utf8mb4
+        collation server: utf8mb4_general_ci
+        mariadb version: latest
+        mysql root password: shrinkker-test-root-db 
+        mysql database: shrinkker-test-db 
+        mysql user: developer
+        mysql password: developer-passwd
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION: mysql
+        DB_PORT: 3306
+        DB_DATABASE: shrinkker-test-db
+        DB_USERNAME: developer
+        DB_PASSWORD: developer-passwd
       run: vendor/bin/phpunit
