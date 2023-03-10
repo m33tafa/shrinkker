@@ -1,4 +1,4 @@
-name: Laravel Tests Shrinkker
+name: Shrinkker Tests
 
 on:
   push:
@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+    - uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: latest
     - uses: actions/checkout@v3
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
@@ -27,15 +27,13 @@ jobs:
     - name: Create & Start MariaDB instance
       uses: getong/mariadb-action@v1.1
       with:
-        # The port of host
         host port: 3306
-        # The port of container
         container port: 3306
         character set server: utf8mb4
         collation server: utf8mb4_general_ci
         mariadb version: latest
-        mysql root password: shrinkker-test-root-db 
-        mysql database: shrinkker-test-db 
+        mysql root password: shrinkker-test-root-db
+        mysql database: shrinkker-test-db
         mysql user: developer
         mysql password: developer-passwd
     - name: Wait for MariaDB
@@ -44,18 +42,7 @@ jobs:
           sleep 1
         done
     - name: Run Migration
-      env:
-        DB_CONNECTION: mysql
-        DB_PORT: 3306
-        DB_DATABASE: shrinkker-test-db
-        DB_USERNAME: root
-        DB_PASSWORD: shrinkker-test-root-db
       run: php artisan migrate --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: mysql
-        DB_PORT: 3306
-        DB_DATABASE: shrinkker-test-db
-        DB_USERNAME: root
-        DB_PASSWORD: shrinkker-test-root-db
       run: vendor/bin/phpunit
