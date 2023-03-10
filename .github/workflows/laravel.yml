@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  laravel-tests:
+  shrinkker-laravel-tests:
 
     runs-on: ubuntu-latest
 
@@ -43,6 +43,14 @@ jobs:
         while ! mysqladmin ping --host=127.0.0.1 --password=shrinkker-test-root-db --silent; do
           sleep 1
         done
+    - name: Run Migration
+      env:
+        DB_CONNECTION: mysql
+        DB_PORT: 3306
+        DB_DATABASE: shrinkker-test-db
+        DB_USERNAME: root
+        DB_PASSWORD: shrinkker-test-root-db
+      run: php artisan migrate --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
