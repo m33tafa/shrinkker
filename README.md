@@ -86,7 +86,7 @@ https://your-host/2qp1ZtYb
 With the following call all already created shrinkked URL's can be displayed for the logged in user:
 ```
 #Request
-POST https://your-host/api/url/shrinkk/list HTTP/1.1
+GET https://your-host/api/url/shrinkk/list HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
@@ -128,8 +128,8 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 ## Delete my shrinkked URL
 To delete a shrinkked URL the following API request can be used:
 ```
-#Request
-POST http://localhost/api/url/shrinkk/delete/WjSMfL77 HTTP/1.1
+#Request - You need the shrinkker URL code here!
+DELETE http://localhost/api/url/shrinkk/delete/{code} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
