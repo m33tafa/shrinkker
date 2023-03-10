@@ -10,5 +10,4 @@ use Illuminate\Support\Facades\Route;
 |
 |
 */
-
 Route::get('/{code}', [UrlController::class, 'redirect']);

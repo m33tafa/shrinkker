@@ -14,10 +14,16 @@ use Illuminate\Support\Facades\Route;
 
 
 // registration & login routes for the user
-Route::post('/auth/register', [AuthController::class, 'createUser']);
-Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::prefix('/auth')->group(function()
+{
+    Route::post('/register', [AuthController::class, 'createUser']);
+    Route::post('/login', [AuthController::class, 'loginUser']);
+});
 
-// shrinkk route for the URL only for authenticated users
-Route::middleware('auth:sanctum')->post('/url/shrinkk/list', [UrlController::class, 'index']);
-Route::middleware('auth:sanctum')->post('/url/shrinkk/create', [UrlController::class, 'create']);
-Route::middleware('auth:sanctum')->post('/url/shrinkk/delete/{code}', [UrlController::class, 'delete']);
+// shrinkk route group only for authenticated users
+Route::middleware('auth:sanctum')->prefix('/url/shrinkk')->group(function()
+{
+    Route::get('/list', [UrlController::class, 'index']);
+    Route::post('/create', [UrlController::class, 'create']);
+    Route::delete('/delete/{code}', [UrlController::class, 'delete']);
+});

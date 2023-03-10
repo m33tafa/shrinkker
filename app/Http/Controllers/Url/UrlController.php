@@ -59,7 +59,7 @@ class UrlController extends Controller
             //Validated
             $validateUrl = Validator::make($request->all(),
             [
-                'url' => 'required'
+                'url' => 'required|url'
             ]);
 
             if($validateUrl->fails()){
@@ -114,7 +114,7 @@ class UrlController extends Controller
             {
                 return response()->json([
                     'status' => true,
-                    'message' => 'Shrinkked URL deleted'
+                    'message' => 'Shrinkked URL with the code '.$code.' deleted'
                 ], 200);
             }else
             {
