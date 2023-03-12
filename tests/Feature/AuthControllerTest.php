@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -19,18 +18,18 @@ class AuthControllerTest extends TestCase
     public function test_create_user_validation_required_name_field_failed(): void
     {
         $response = $this->postJson('/api/auth/register',
-         ['email' => 'sally@green.com','password', 'password' => 'saLLy23!-Gre90']);
+            ['email' => 'sally@green.com', 'password', 'password' => 'saLLy23!-Gre90']);
 
         $response
         ->assertStatus(401)
         ->assertJson([
-            "status" => false,
-            "message" => "validation error",
-            "errors" => [
-                "name" => [
-                    "The name field is required."
-                ]
-        ]
+            'status' => false,
+            'message' => 'validation error',
+            'errors' => [
+                'name' => [
+                    'The name field is required.',
+                ],
+            ],
         ]);
     }
 
@@ -40,18 +39,18 @@ class AuthControllerTest extends TestCase
     public function test_create_user_validation_required_email_field_failed(): void
     {
         $response = $this->postJson('/api/auth/register',
-         ['name' => 'Sally Green','password' => 'saLLy23!-Gre90']);
+            ['name' => 'Sally Green', 'password' => 'saLLy23!-Gre90']);
 
         $response
         ->assertStatus(401)
         ->assertJson([
-            "status" => false,
-            "message" => "validation error",
-            "errors" => [
-                "email" => [
-                    "The email field is required."
-                ]
-        ]
+            'status' => false,
+            'message' => 'validation error',
+            'errors' => [
+                'email' => [
+                    'The email field is required.',
+                ],
+            ],
         ]);
     }
 
@@ -61,18 +60,18 @@ class AuthControllerTest extends TestCase
     public function test_create_user_validation_email_field_valid_address_failed(): void
     {
         $response = $this->postJson('/api/auth/register',
-         ['name' => 'Sally Green', 'email' => 'sallyG', 'password' => 'saLLy23!-Gre90']);
+            ['name' => 'Sally Green', 'email' => 'sallyG', 'password' => 'saLLy23!-Gre90']);
 
         $response
         ->assertStatus(401)
         ->assertJson([
-            "status" => false,
-            "message" => "validation error",
-            "errors" => [
-                "email" => [
-                    "The email field must be a valid email address."
-                ]
-        ]
+            'status' => false,
+            'message' => 'validation error',
+            'errors' => [
+                'email' => [
+                    'The email field must be a valid email address.',
+                ],
+            ],
         ]);
     }
 
@@ -82,18 +81,18 @@ class AuthControllerTest extends TestCase
     public function test_create_user_validation_password_field_failed(): void
     {
         $response = $this->postJson('/api/auth/register',
-         ['name' => 'Sally Green','email' => 'sally@green.com']);
+            ['name' => 'Sally Green', 'email' => 'sally@green.com']);
 
         $response
         ->assertStatus(401)
         ->assertJson([
-            "status" => false,
-            "message" => "validation error",
-            "errors" => [
-                "password" => [
-                    "The password field is required."
-                ]
-        ]
+            'status' => false,
+            'message' => 'validation error',
+            'errors' => [
+                'password' => [
+                    'The password field is required.',
+                ],
+            ],
         ]);
     }
 
@@ -106,10 +105,10 @@ class AuthControllerTest extends TestCase
         $fakerFactory = Factory::create();
         $userName = $fakerFactory->name();
         $userEmail = $fakerFactory->email();
-        $userPassword = $fakerFactory->password(6,20);
+        $userPassword = $fakerFactory->password(6, 20);
 
         $response = $this->postJson('/api/auth/register',
-         ['name' => $userName,'email' => $userEmail,'password' => $userPassword]);
+            ['name' => $userName, 'email' => $userEmail, 'password' => $userPassword]);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -126,24 +125,23 @@ class AuthControllerTest extends TestCase
         // use the factory to create an user
         User::factory()->create([
             'name' => 'Sully Boyle',
-            'email' => 'sully@boyle.com'
+            'email' => 'sully@boyle.com',
         ]);
 
         $response = $this->postJson('/api/auth/register',
-         ['name' => 'Harold Boyle','email' => 'sully@boyle.com','password' => 'bpyö(883f!ia']);
+            ['name' => 'Harold Boyle', 'email' => 'sully@boyle.com', 'password' => 'bpyö(883f!ia']);
         $response
             ->assertStatus(401)
             ->assertJson([
-                "status" => false,
-                "message" => "validation error",
-                "errors" => [
-                    "email" => [
-                        "The email has already been taken."
-                    ]
-                ]
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => [
+                    'email' => [
+                        'The email has already been taken.',
+                    ],
+                ],
             ]);
     }
-
 
     /**
      * test login user was successful
@@ -154,15 +152,15 @@ class AuthControllerTest extends TestCase
         User::factory()->create([
             'name' => 'Richard Sutt',
             'email' => 'risutt76@mysh.edu',
-            'password' => Hash::make('sA//-Gre90!sf')
+            'password' => Hash::make('sA//-Gre90!sf'),
         ]);
         $response = $this->postJson('/api/auth/login',
-         ['email' => 'risutt76@mysh.edu','password' => 'sA//-Gre90!sf']);
+            ['email' => 'risutt76@mysh.edu', 'password' => 'sA//-Gre90!sf']);
         $response
         ->assertStatus(200)
         ->assertJson([
             'status' => true,
-            'message' => 'Shrinkker User Logged In Successfully'
+            'message' => 'Shrinkker User Logged In Successfully',
         ]);
     }
 
@@ -175,14 +173,14 @@ class AuthControllerTest extends TestCase
         User::factory()->create([
             'name' => 'Dan Gunner',
             'email' => 'dangunner@mysh.edu',
-            'password' => Hash::make('sA//-Gre90!sf')
+            'password' => Hash::make('sA//-Gre90!sf'),
         ]);
         $response = $this->postJson('/api/auth/login',
-         ['email' => 'sally@green.com','password' => 'sLLy23!A//-Gre90']);
+            ['email' => 'sally@green.com', 'password' => 'sLLy23!A//-Gre90']);
         $response
         ->assertStatus(401)
         ->assertJson([
             'status' => false,
-            'message' => 'Email & Password does not match with our Shrinkk user record!'        ]);
+            'message' => 'Email & Password does not match with our Shrinkk user record!']);
     }
 }

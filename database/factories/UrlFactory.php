@@ -20,8 +20,8 @@ class UrlFactory extends Factory
         return [
             'url' => $this->faker->url(),
             'code' => Str::random(8),
-            'hits' => rand(0,256),
-            'user_id' => auth()->id()
+            'hits' => rand(0, 256),
+            'user_id' => auth()->id(),
         ];
     }
 }

@@ -15,7 +15,7 @@ class UrlCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'url-list' => $this->collection
+            'url-list' => $this->collection,
         ];
     }
 }

@@ -18,9 +18,9 @@ class UrlResource extends JsonResource
         return [
             'original_url' => $this->url,
             'code' => $this->code,
-            'shrinkked_url' => FacadesURL::to('/'. $this->code),
+            'shrinkked_url' => FacadesURL::to('/'.$this->code),
             'creation_time' => $this->created_at,
-            'hits' => $this->hits
+            'hits' => $this->hits,
         ];
     }
 }

@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class UrlControllerTest extends TestCase
 {
-
     /**
      * test index - current authenticated user has no shrinkked urls
      */
@@ -28,7 +27,7 @@ class UrlControllerTest extends TestCase
         ->assertStatus(200)
         ->assertJson([
             'status' => false,
-            'message' => 'Shrinkked URLs not found!'
+            'message' => 'Shrinkked URLs not found!',
         ]);
     }
 
@@ -51,7 +50,7 @@ class UrlControllerTest extends TestCase
         ->assertStatus(200)
         ->assertJson([
             'status' => true,
-            'message' => 'Shrinkked URLs List'
+            'message' => 'Shrinkked URLs List',
         ]);
     }
 
@@ -70,12 +69,12 @@ class UrlControllerTest extends TestCase
         $fakerFactory = Factory::create();
 
         $response = $this->postJson('/api/url/shrinkk/create',
-        ['url' => $fakerFactory->url()]);
+            ['url' => $fakerFactory->url()]);
         $response
         ->assertStatus(200)
         ->assertJson([
-            "status" => true,
-            "message" => "Given Url shrinkked successfully"
+            'status' => true,
+            'message' => 'Given Url shrinkked successfully',
         ]);
     }
 
@@ -103,7 +102,59 @@ class UrlControllerTest extends TestCase
         ->assertStatus(200)
         ->assertJson([
             'status' => true,
-            'message' => 'Shrinkked URL with the code '.$code.' deleted'
+            'message' => 'Shrinkked URL with the code '.$code.' deleted',
         ]);
+    }
+
+    public function test_redirect_shrinkked_url_to_destination_success()
+    {
+        // create and authenticate test user
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        // create a random code
+        $code = Str::random(8);
+
+        // use the factory to create an fake URL
+        $fakerFactory = Factory::create();
+        $url = $fakerFactory->url();
+
+        // create an shrinkked URL for the test user
+        Url::factory()->create([
+            'code' => $code,
+            'url' => $url,
+        ]);
+
+        $response = $this->get('/'.$code);
+        $response->assertStatus(302);
+        $response->assertRedirect($url);
+    }
+
+    public function test_redirect_shrinkked_url_to_destination_failed()
+    {
+        // create and authenticate test user
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        // create a random code
+        $code = Str::random(8);
+
+        // use the factory to create an fake URL
+        $fakerFactory = Factory::create();
+        $url = $fakerFactory->url();
+
+        // create an shrinkked URL for the test user
+        Url::factory()->create([
+            'code' => $code,
+            'url' => $url,
+        ]);
+
+        $response = $this->get('/A7i45w8T');
+        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

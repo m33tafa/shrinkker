@@ -12,17 +12,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 // registration & login routes for the user
-Route::prefix('/auth')->group(function()
-{
+Route::prefix('/auth')->group(function () {
     Route::post('/register', [AuthController::class, 'createUser']);
     Route::post('/login', [AuthController::class, 'loginUser']);
 });
 
 // shrinkk route group only for authenticated users
-Route::middleware('auth:sanctum')->prefix('/url/shrinkk')->group(function()
-{
+Route::middleware('auth:sanctum')->prefix('/url/shrinkk')->group(function () {
     Route::get('/list', [UrlController::class, 'index']);
     Route::post('/create', [UrlController::class, 'create']);
     Route::delete('/delete/{code}', [UrlController::class, 'delete']);
