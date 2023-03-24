@@ -1,14 +1,12 @@
 [![Shrinkker Tests](https://github.com/m33tafa/shrinkker/actions/workflows/laravel.yml/badge.svg)](https://github.com/m33tafa/shrinkker/actions/workflows/laravel.yml)
 
-# Shrinkker
+![shrinkker](https://user-images.githubusercontent.com/93522116/227634320-d3cb81e9-3990-434a-8309-917061f42303.svg)
 
 Shrinkker is a simple URL shortener made with Laravel PHP.
 
 The Shrinkker app provides a full Restful API for managing shortening URL's and users.
 
 To use Shrinkker, a user management with a token-based authentication is available.
-
-
 
 ## Register Shrinkker Users
 To register users, you can proceed as follows in the Restful API of the app:
