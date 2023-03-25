@@ -8,10 +8,12 @@ The Shrinkker app provides a full Restful API for managing shortening URL's and 
 
 To use Shrinkker, a user management with a token-based authentication is available.
 
+Hint: In this description, the address shrinkk.er is used for the service.
+
 ## Register Shrinkker Users
 To register users, you can proceed as follows in the Restful API of the app:
 ```
-POST https://your-host/api/auth/register HTTP/1.1
+POST https://shrinkk.er/api/auth/register HTTP/1.1
 content-type: application/json
 
 {
@@ -32,7 +34,7 @@ When the new user is successfully registered, the following response appears wit
 ## Login Shrinkker Users (Get Token for existing User)
 To get a token for an already registered user the following API request can be used:
 ```
-POST https://your-host/api/auth/login HTTP/1.1
+POST https://shrinkk.er/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -53,7 +55,7 @@ When the existing user is successfully logged in, the following response appears
 ## Shrinkk URL's
 To shorten/shrinkk an existing long URL you need a shrinkker user with an authentication token. If you have that you can shorten a URL with the following API request:
 ```
-POST https://your-host/api/url/shrinkk/create HTTP/1.1
+POST https://shrinkk.er/api/url/shrinkk/create HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
@@ -79,13 +81,13 @@ If the long URL was successfully shortened, the following response appears with 
 ```
 Now, with the help of the new, shrinkked URL, the desired destination address can be accessed with any web browser:
 ```
-https://your-host/2qp1ZtYb
+https://shrinkk.er/2qp1ZtYb
 ```
 ## List all my shrinkked URL's
 With the following call all already created shrinkked URL's can be displayed for the logged in user:
 ```
 #Request
-GET https://your-host/api/url/shrinkk/list HTTP/1.1
+GET https://shrinkk.er/api/url/shrinkk/list HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
@@ -99,21 +101,21 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
       "2qp1ZtYb": {
         "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=4",
         "code": "2qp1ZtYb",
-        "shrinkked_url": "https://your-host/2qp1ZtYb",
+        "shrinkked_url": "https://shrinkk.er/2qp1ZtYb",
         "creation_time": "2023-03-01T09:12:57.000000Z",
         "hits": 75
       },
       "orAYZ3or": {
         "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=5",
         "code": "orAYZ3or",
-        "shrinkked_url": "https://your-host/orAYZ3or",
+        "shrinkked_url": "https://shrinkk.er/orAYZ3or",
         "creation_time": "2023-03-04T00:14:47.000000Z",
         "hits": 7
       },
       "a9cy0QUd": {
         "original_url": "https://test-shrinkker-site.com/blog/articles/year/2023?page=6",
         "code": "a9cy0QUd",
-        "shrinkked_url": "https://your-host/a9cy0QUd",
+        "shrinkked_url": "https://shrinkk.er/a9cy0QUd",
         "creation_time": "2023-03-05T23:14:52.000000Z",
         "hits": 0
       }
@@ -128,7 +130,7 @@ Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 To delete a shrinkked URL the following API request can be used:
 ```
 #Request - You need the shrinkker URL code here!
-DELETE http://localhost/api/url/shrinkk/delete/{code} HTTP/1.1
+DELETE https://shrinkk.er/api/url/shrinkk/delete/{code} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer 6|AyUKnqe0QlLBNkZHIniUc8DNXakDas7bUaO3e7sT
 
@@ -152,6 +154,7 @@ Install the following dependencies on your machine
   docker
   docker compose
 ```
+Register the shrinkk.er host locally for 127.0.0.1.
 
 Start Shrinkker with Sail
 
